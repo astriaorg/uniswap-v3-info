@@ -1,11 +1,5 @@
 import { RowFixed, RowBetween } from 'components/Row'
-import {
-  AvalancheNetworkInfo,
-  BNBNetworkInfo,
-  CeloNetworkInfo,
-  PolygonNetworkInfo,
-  SUPPORTED_NETWORK_VERSIONS,
-} from 'constants/networks'
+import { SUPPORTED_NETWORK_VERSIONS } from 'constants/networks'
 import useTheme from 'hooks/useTheme'
 import React, { useState, useRef } from 'react'
 import { ChevronDown } from 'react-feather'
@@ -14,7 +8,6 @@ import styled from 'styled-components'
 import { StyledInternalLink, TYPE } from 'theme'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { AutoColumn } from 'components/Column'
-import { EthereumNetworkInfo } from '../../constants/networks'
 
 const Container = styled.div`
   position: relative;
@@ -67,14 +60,6 @@ const NetworkRow = styled(RowBetween)<{ active?: boolean; disabled?: boolean }>`
   }
 `
 
-const Badge = styled.div<{ $bgColor?: string }>`
-  background-color: ${({ theme, $bgColor }) => $bgColor ?? theme.bg4};
-  border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 12px;
-  font-weight: 600;
-`
-
 const GreenDot = styled.div`
   height: 12px;
   width: 12px;
@@ -104,13 +89,6 @@ export default function NetworkDropdown() {
           <TYPE.main fontSize="14px" color={theme?.white} ml="8px" mt="-2px" mr="2px" style={{ whiteSpace: 'nowrap' }}>
             {activeNetwork.name}
           </TYPE.main>
-          {[EthereumNetworkInfo, PolygonNetworkInfo, CeloNetworkInfo, BNBNetworkInfo, AvalancheNetworkInfo].includes(
-            activeNetwork,
-          ) ? null : (
-            <Badge $bgColor={activeNetwork.primaryColor} style={{ margin: '0 4px' }}>
-              L2
-            </Badge>
-          )}
           <ChevronDown size="20px" />
         </RowFixed>
       </Wrapper>
@@ -122,7 +100,7 @@ export default function NetworkDropdown() {
             </TYPE.main>
             {SUPPORTED_NETWORK_VERSIONS.map((n) => {
               return (
-                <StyledInternalLink key={n.id} to={`${n === EthereumNetworkInfo ? '' : '/' + n.route}/`}>
+                <StyledInternalLink key={n.id} to={``}>
                   <NetworkRow
                     onClick={() => {
                       setShowMenu(false)

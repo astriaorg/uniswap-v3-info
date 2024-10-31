@@ -6,7 +6,6 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import gql from 'graphql-tag'
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { useActiveNetworkVersion, useClients } from 'state/application/hooks'
-import { arbitrumClient, optimismClient } from 'apollo/client'
 import { SupportedNetwork } from 'constants/networks'
 import { useDerivedProtocolTVLHistory } from './derived'
 
@@ -47,7 +46,7 @@ async function fetchChartData(client: ApolloClient<NormalizedCacheObject>) {
     volumeUSD: string
     tvlUSD: string
   }[] = []
-  const startTimestamp = client === arbitrumClient ? 1630423606 : client === optimismClient ? 1636697130 : 1619170975
+  const startTimestamp = 1619170975
   const endTimestamp = dayjs.utc().unix()
 
   let error = false
@@ -113,17 +112,6 @@ async function fetchChartData(client: ApolloClient<NormalizedCacheObject>) {
       timestamp = nextDay
     }
 
-    if (client === optimismClient) {
-      formattedExisting[18855] = {
-        ...formattedExisting[18855],
-        tvlUSD: 13480000,
-      }
-      formattedExisting[18856] = {
-        ...formattedExisting[18856],
-        tvlUSD: 13480000,
-      }
-    }
-
     return {
       data: Object.values(formattedExisting),
       error: false,
@@ -150,8 +138,7 @@ export function useFetchGlobalChartData(): {
   const derivedData = useDerivedProtocolTVLHistory()
 
   const [activeNetworkVersion] = useActiveNetworkVersion()
-  const shouldUserDerivedData =
-    activeNetworkVersion.id === SupportedNetwork.ETHEREUM || activeNetworkVersion.id === SupportedNetwork.POLYGON
+  const shouldUserDerivedData = activeNetworkVersion.id === SupportedNetwork.FLAME
   const indexedData = data?.[activeNetworkVersion.id]
 
   // @TODO: remove this once we have fix for mainnet TVL issue

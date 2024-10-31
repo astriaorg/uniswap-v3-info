@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { TYPE, ExternalLink } from '../../theme'
 
-import { useActiveNetworkVersion, useSubgraphStatus } from '../../state/application/hooks'
+import { useSubgraphStatus } from '../../state/application/hooks'
 import { ExplorerDataType, getExplorerLink } from '../../utils'
 import useTheme from 'hooks/useTheme'
-import { EthereumNetworkInfo } from 'constants/networks'
 import { ChainId } from '@uniswap/sdk-core'
 
 const StyledPolling = styled.div`
@@ -66,10 +65,9 @@ const Spinner = styled.div`
 
 export default function Polling() {
   const theme = useTheme()
-  const [activeNetwork] = useActiveNetworkVersion()
   const [status] = useSubgraphStatus()
   const [isMounted, setIsMounted] = useState(true)
-  const latestBlock = activeNetwork === EthereumNetworkInfo ? status.headBlock : status.syncedBlock
+  const latestBlock = status.headBlock
 
   useEffect(
     () => {

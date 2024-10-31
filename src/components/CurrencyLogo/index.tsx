@@ -2,29 +2,15 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { isAddress } from 'utils'
 import Logo from '../Logo'
-import { useCombinedActiveList } from 'state/lists/hooks'
-import useHttpLocations from 'hooks/useHttpLocations'
 import { useActiveNetworkVersion } from 'state/application/hooks'
-import { OptimismNetworkInfo } from 'constants/networks'
-import EthereumLogo from '../../assets/images/ethereum-logo.png'
 import { ChainId } from '@uniswap/sdk-core'
 
 export function chainIdToNetworkName(networkId: ChainId) {
   switch (networkId) {
-    case ChainId.MAINNET:
-      return 'ethereum'
-    case ChainId.ARBITRUM_ONE:
-      return 'arbitrum'
-    case ChainId.OPTIMISM:
-      return 'optimism'
-    case ChainId.POLYGON:
-      return 'polygon'
-    case ChainId.BNB:
-      return 'smartchain'
-    case ChainId.BASE:
-      return 'base'
+    case 253368190 as ChainId:
+      return 'flame'
     default:
-      return 'ethereum'
+      return 'flame'
   }
 }
 
@@ -43,13 +29,6 @@ const StyledLogo = styled(Logo)<{ size: string }>`
   color: ${({ theme }) => theme.text4};
 `
 
-const StyledEthereumLogo = styled.img<{ size: string }>`
-  width: ${({ size }) => size};
-  height: ${({ size }) => size};
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
-  border-radius: 24px;
-`
-
 export default function CurrencyLogo({
   address,
   size = '24px',
@@ -60,65 +39,9 @@ export default function CurrencyLogo({
   size?: string
   style?: React.CSSProperties
 }) {
-  // useOptimismList()
-  const optimismList = useCombinedActiveList()?.[10]
-  const arbitrumList = useCombinedActiveList()?.[42161]
-  const polygon = useCombinedActiveList()?.[137]
-  const celo = useCombinedActiveList()?.[42220]
-  const bnbList = useCombinedActiveList()?.[ChainId.BNB]
-  const baseList = useCombinedActiveList()?.[ChainId.BASE]
-
   const [activeNetwork] = useActiveNetworkVersion()
 
-  const checkSummed = isAddress(address)
-
-  const optimismURI = useMemo(() => {
-    if (checkSummed && optimismList?.[checkSummed]) {
-      return optimismList?.[checkSummed].token.logoURI
-    }
-    return undefined
-  }, [checkSummed, optimismList])
-  const uriLocationsOptimism = useHttpLocations(optimismURI)
-
-  const arbitrumURI = useMemo(() => {
-    if (checkSummed && arbitrumList?.[checkSummed]) {
-      return arbitrumList?.[checkSummed].token.logoURI
-    }
-    return undefined
-  }, [checkSummed, arbitrumList])
-  const uriLocationsArbitrum = useHttpLocations(arbitrumURI)
-
-  const BNBURI = useMemo(() => {
-    if (checkSummed && bnbList?.[checkSummed]) {
-      return bnbList?.[checkSummed].token.logoURI
-    }
-    return undefined
-  }, [checkSummed, bnbList])
-  const uriLocationsBNB = useHttpLocations(BNBURI)
-
-  const BaseURI = useMemo(() => {
-    if (checkSummed && baseList?.[checkSummed]) {
-      return baseList?.[checkSummed].token.logoURI
-    }
-    return undefined
-  }, [checkSummed, baseList])
-  const uriLocationsBase = useHttpLocations(BaseURI)
-
-  const polygonURI = useMemo(() => {
-    if (checkSummed && polygon?.[checkSummed]) {
-      return polygon?.[checkSummed].token.logoURI
-    }
-    return undefined
-  }, [checkSummed, polygon])
-  const uriLocationsPolygon = useHttpLocations(polygonURI)
-
-  const celoURI = useMemo(() => {
-    if (checkSummed && celo?.[checkSummed]) {
-      return celo?.[checkSummed].token.logoURI
-    }
-    return undefined
-  }, [checkSummed, celo])
-  const uriLocationsCelo = useHttpLocations(celoURI)
+  // const checkSummed = isAddress(address)
 
   //temp until token logo issue merged
   const tempSources: { [address: string]: string } = useMemo(() => {
@@ -133,33 +56,10 @@ export default function CurrencyLogo({
 
     if (checkSummed && address) {
       const override = tempSources[address]
-      return [
-        getTokenLogoURL({ address: checkSummed, chainId: activeNetwork.chainId }),
-        ...uriLocationsOptimism,
-        ...uriLocationsArbitrum,
-        ...uriLocationsPolygon,
-        ...uriLocationsCelo,
-        ...uriLocationsBNB,
-        ...uriLocationsBase,
-        override,
-      ]
+      return [getTokenLogoURL({ address: checkSummed, chainId: activeNetwork.chainId }), override]
     }
     return []
-  }, [
-    address,
-    tempSources,
-    activeNetwork.chainId,
-    uriLocationsOptimism,
-    uriLocationsArbitrum,
-    uriLocationsPolygon,
-    uriLocationsCelo,
-    uriLocationsBNB,
-    uriLocationsBase,
-  ])
-
-  if (activeNetwork === OptimismNetworkInfo && address === '0x4200000000000000000000000000000000000006') {
-    return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} {...rest} />
-  }
+  }, [address, tempSources, activeNetwork.chainId])
 
   return <StyledLogo size={size} srcs={srcs} alt={'token logo'} style={style} {...rest} />
 }

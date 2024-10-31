@@ -41,14 +41,7 @@ const DEFAULT_INITIAL_STATE = {
 }
 
 export const initialState: ProtocolState = {
-  [SupportedNetwork.ETHEREUM]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.ARBITRUM]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.OPTIMISM]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.POLYGON]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.CELO]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.BNB]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.AVALANCHE]: DEFAULT_INITIAL_STATE,
-  [SupportedNetwork.BASE]: DEFAULT_INITIAL_STATE,
+  [SupportedNetwork.FLAME]: DEFAULT_INITIAL_STATE,
 }
 
 export default createReducer(initialState, (builder) =>

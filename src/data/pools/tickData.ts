@@ -109,8 +109,6 @@ const fetchInitializedTicks = async (
       },
     })
 
-    // console.log({ data, error, loading }, 'Result. Skip: ' + skip)
-
     if (loading) {
       continue
     }
@@ -219,8 +217,6 @@ export const fetchTicksSurroundingPrice = async (
 
   const token0 = new Token(1, token0Address, parseInt(token0Decimals))
   const token1 = new Token(1, token1Address, parseInt(token1Decimals))
-
-  // console.log({ activeTickIdx, poolCurrentTickIdx }, 'Active ticks')
 
   // If the pool's tick is MIN_TICK (-887272), then when we find the closest
   // initializable tick to its left, the value would be smaller than MIN_TICK.

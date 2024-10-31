@@ -48,7 +48,7 @@ export function CurrentPriceLabel({ data, chartProps, poolData }: CurrentPriceLa
                     height: '6px',
                     width: '6px',
                     borderRadius: '50%',
-                    backgroundColor: theme?.pink1,
+                    backgroundColor: theme?.orange1,
                   }}
                 ></div>
               </RowFixed>

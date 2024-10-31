@@ -72,6 +72,12 @@ export function useBlocksFromTimestamps(
             timestamp: t.split('t')[1],
             number: adjustedNumber,
           })
+        } else {
+          const number = START_BLOCKS[activeNetwork.id]
+          formatted.push({
+            timestamp: t.split('t')[1],
+            number,
+          })
         }
       }
       return formatted

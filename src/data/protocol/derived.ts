@@ -53,7 +53,7 @@ export function useDerivedOffsetTVLHistory() {
           const accum = await accumP
           const { data } = await fetchPoolChartData(address, dataClient)
           if (!data) return accum
-          dispatch(updatePoolChartData({ poolAddress: address, chartData: data, networkId: SupportedNetwork.ETHEREUM }))
+          dispatch(updatePoolChartData({ poolAddress: address, chartData: data, networkId: SupportedNetwork.FLAME }))
           data.map((poolDayData: PoolChartEntry) => {
             const { date, totalValueLockedUSD, volumeUSD } = poolDayData
             const roundedDate = date

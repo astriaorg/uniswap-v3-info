@@ -17,7 +17,6 @@ import { usePoolDatas } from 'state/pools/hooks'
 import HoverInlineText from 'components/HoverInlineText'
 import { TOKEN_HIDE, POOL_HIDE } from '../../constants/index'
 import { useActiveNetworkVersion } from 'state/application/hooks'
-import { networkPrefix } from 'utils/networkPrefix'
 import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
@@ -84,7 +83,7 @@ const Menu = styled.div<{ $hide: boolean }>`
     0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.04);
   display: ${({ $hide }) => $hide && 'none'};
-  border: 1px solid ${({ theme }) => theme.pink1};
+  border: 1px solid ${({ theme }) => theme.orange1};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     position: absolute;
@@ -148,8 +147,8 @@ const OptionButton = styled.div<{ $enabled: boolean }>`
   margin-right: 10px;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme, $enabled }) => ($enabled ? theme.pink1 : 'transparent')};
-  color: ${({ theme, $enabled }) => ($enabled ? theme.white : theme.pink1)};
+  background-color: ${({ theme, $enabled }) => ($enabled ? theme.orange1 : 'transparent')};
+  color: ${({ theme, $enabled }) => ($enabled ? theme.white : theme.orange1)};
   :hover {
     opacity: 0.6;
     cursor: pointer;
@@ -284,7 +283,7 @@ const Search = ({ ...rest }: React.HTMLAttributes<HTMLDivElement>) => {
               .slice(0, tokensShown)
               .map((t, i) => {
                 return (
-                  <HoverRowLink onClick={() => handleNav(networkPrefix(activeNetwork) + 'tokens/' + t.address)} key={i}>
+                  <HoverRowLink onClick={() => handleNav('/tokens/' + t.address)} key={i}>
                     <ResponsiveGrid>
                       <RowFixed>
                         <CurrencyLogo address={t.address} />
@@ -351,7 +350,7 @@ const Search = ({ ...rest }: React.HTMLAttributes<HTMLDivElement>) => {
               .slice(0, poolsShown)
               .map((p, i) => {
                 return (
-                  <HoverRowLink onClick={() => handleNav(networkPrefix(activeNetwork) + 'pools/' + p.address)} key={i}>
+                  <HoverRowLink onClick={() => handleNav('/pools/' + p.address)} key={i}>
                     <ResponsiveGrid key={i}>
                       <RowFixed>
                         <DoubleCurrencyLogo address0={p.token0.address} address1={p.token1.address} />

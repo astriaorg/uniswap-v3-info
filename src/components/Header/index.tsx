@@ -2,13 +2,11 @@ import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { darken } from 'polished'
 import styled from 'styled-components'
-import LogoDark from '../../assets/svg/logo_white.svg'
-import Menu from '../Menu'
+import LogoDark from '../../assets/images/flame-logo-dark.svg'
+// import Menu from '../Menu'
 import Row, { RowFixed, RowBetween } from '../Row'
 import SearchSmall from 'components/Search'
-import NetworkDropdown from 'components/Menu/NetworkDropdown'
-import { useActiveNetworkVersion } from 'state/application/hooks'
-import { networkPrefix } from 'utils/networkPrefix'
+// import NetworkDropdown from 'components/Menu/NetworkDropdown'
 import { AutoColumn } from 'components/Column'
 
 const HeaderFrame = styled.div`
@@ -81,13 +79,6 @@ const Title = styled(NavLink)`
   `};
 `
 
-const UniIcon = styled.div`
-  transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
-  }
-`
-
 const StyledNavLink = styled(NavLink)<{ $isActive: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: left;
@@ -150,48 +141,36 @@ const SmallContentGrouping = styled.div`
 `
 
 export default function Header() {
-  const [activeNewtork] = useActiveNetworkVersion()
-
   const { pathname } = useLocation()
 
   return (
     <HeaderFrame>
       <HeaderRow>
-        <Title to={networkPrefix(activeNewtork)}>
-          <UniIcon>
-            <img width={'24px'} src={LogoDark} alt="logo" />
-          </UniIcon>
+        <Title to="/">
+          <img width={'161px'} height={'28px'} src={LogoDark} alt="logo" />
         </Title>
         <HeaderLinks>
-          <StyledNavLink id={`pool-nav-link`} to={networkPrefix(activeNewtork)} $isActive={pathname === '/'}>
+          <StyledNavLink id={`pool-nav-link`} to="/" $isActive={pathname === '/'}>
             Overview
           </StyledNavLink>
-          <StyledNavLink
-            id={`stake-nav-link`}
-            to={networkPrefix(activeNewtork) + 'pools'}
-            $isActive={pathname.includes('pools')}
-          >
+          <StyledNavLink id={`stake-nav-link`} to="/pools" $isActive={pathname.includes('pools')}>
             Pools
           </StyledNavLink>
-          <StyledNavLink
-            id={`stake-nav-link`}
-            to={networkPrefix(activeNewtork) + 'tokens'}
-            $isActive={pathname.includes('tokens')}
-          >
+          <StyledNavLink id={`stake-nav-link`} to="/tokens" $isActive={pathname.includes('tokens')}>
             Tokens
           </StyledNavLink>
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>
-        <NetworkDropdown />
+        {/* <NetworkDropdown /> */}
         <SearchSmall />
-        <Menu />
+        {/* <Menu /> */}
       </HeaderControls>
       <SmallContentGrouping>
         <AutoColumn $gap="sm">
           <RowBetween>
-            <NetworkDropdown />
-            <Menu />
+            {/* <NetworkDropdown /> */}
+            {/* <Menu /> */}
           </RowBetween>
           <SearchSmall />
         </AutoColumn>

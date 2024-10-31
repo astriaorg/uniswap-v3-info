@@ -12,7 +12,7 @@ import Percent from 'components/Percent'
 import { HideMedium, HideSmall, StyledInternalLink } from '../../theme/components'
 import TokenTable from 'components/tokens/TokenTable'
 import PoolTable from 'components/pools/PoolTable'
-import { PageWrapper, ThemedBackgroundGlobal } from 'pages/styled'
+import { PageWrapper } from 'pages/styled'
 import { unixToDate } from 'utils/date'
 import BarChart from 'components/BarChart/alt'
 import { useAllPoolData } from 'state/pools/hooks'
@@ -24,7 +24,6 @@ import { useActiveNetworkVersion } from 'state/application/hooks'
 import { useTransformedVolumeData } from 'hooks/chart'
 import { SmallOptionButton } from 'components/Button'
 import { VolumeWindow } from 'types'
-import { Trace } from '@uniswap/analytics'
 
 const ChartWrapper = styled.div`
   width: 49%;
@@ -126,132 +125,129 @@ export default function Home() {
   }, [liquidityHover, protocolData?.tvlUSD])
 
   return (
-    <Trace page={'home-page'} shouldLogImpression>
-      <PageWrapper>
-        <ThemedBackgroundGlobal $backgroundColor={activeNetwork.bgColor} />
-        <AutoColumn $gap="16px">
-          <TYPE.main>Uniswap Overview</TYPE.main>
-          <ResponsiveRow>
-            <ChartWrapper>
-              <LineChart
-                data={formattedTvlData}
-                height={220}
-                minHeight={332}
-                color={activeNetwork.primaryColor}
-                value={liquidityHover}
-                label={leftLabel}
-                setValue={setLiquidityHover}
-                setLabel={setLeftLabel}
-                topLeft={
-                  <AutoColumn $gap="4px">
-                    <TYPE.mediumHeader fontSize="16px">TVL</TYPE.mediumHeader>
-                    <TYPE.largeHeader fontSize="32px">
-                      <MonoSpace>{tvlValue} </MonoSpace>
-                    </TYPE.largeHeader>
-                    <TYPE.main fontSize="12px" height="14px">
-                      {leftLabel ? <MonoSpace>{leftLabel} (UTC)</MonoSpace> : null}
-                    </TYPE.main>
-                  </AutoColumn>
-                }
-              />
-            </ChartWrapper>
-            <ChartWrapper>
-              <BarChart
-                height={220}
-                minHeight={332}
-                data={
-                  volumeWindow === VolumeWindow.monthly
-                    ? monthlyVolumeData
-                    : volumeWindow === VolumeWindow.weekly
-                    ? weeklyVolumeData
-                    : formattedVolumeData
-                }
-                color={theme?.blue1}
-                setValue={setVolumeHover}
-                setLabel={setRightLabel}
-                value={volumeHover}
-                label={rightLabel}
-                activeWindow={volumeWindow}
-                topRight={
-                  <RowFixed style={{ marginLeft: '-40px', marginTop: '8px' }}>
-                    <SmallOptionButton
-                      $active={volumeWindow === VolumeWindow.daily}
-                      onClick={() => setVolumeWindow(VolumeWindow.daily)}
-                    >
-                      D
-                    </SmallOptionButton>
-                    <SmallOptionButton
-                      $active={volumeWindow === VolumeWindow.weekly}
-                      style={{ marginLeft: '8px' }}
-                      onClick={() => setVolumeWindow(VolumeWindow.weekly)}
-                    >
-                      W
-                    </SmallOptionButton>
-                    <SmallOptionButton
-                      $active={volumeWindow === VolumeWindow.monthly}
-                      style={{ marginLeft: '8px' }}
-                      onClick={() => setVolumeWindow(VolumeWindow.monthly)}
-                    >
-                      M
-                    </SmallOptionButton>
-                  </RowFixed>
-                }
-                topLeft={
-                  <AutoColumn $gap="4px">
-                    <TYPE.mediumHeader fontSize="16px">Volume 24H</TYPE.mediumHeader>
-                    <TYPE.largeHeader fontSize="32px">
-                      <MonoSpace> {formatDollarAmount(volumeHover, 2)}</MonoSpace>
-                    </TYPE.largeHeader>
-                    <TYPE.main fontSize="12px" height="14px">
-                      {rightLabel ? <MonoSpace>{rightLabel} (UTC)</MonoSpace> : null}
-                    </TYPE.main>
-                  </AutoColumn>
-                }
-              />
-            </ChartWrapper>
-          </ResponsiveRow>
-          <HideSmall>
-            <DarkGreyCard>
-              <RowBetween>
-                <RowFixed>
-                  <RowFixed mr="20px">
-                    <TYPE.main mr="4px">Volume 24H: </TYPE.main>
-                    <TYPE.label mr="4px">{formatDollarAmount(protocolData?.volumeUSD)}</TYPE.label>
-                    <Percent value={protocolData?.volumeUSDChange} wrap={true} />
-                  </RowFixed>
-                  <RowFixed mr="20px">
-                    <TYPE.main mr="4px">Fees 24H: </TYPE.main>
-                    <TYPE.label mr="4px">{formatDollarAmount(protocolData?.feesUSD)}</TYPE.label>
-                    <Percent value={protocolData?.feeChange} wrap={true} />
-                  </RowFixed>
-                  <HideMedium>
-                    <RowFixed mr="20px">
-                      <TYPE.main mr="4px">TVL: </TYPE.main>
-                      <TYPE.label mr="4px">{formatDollarAmount(protocolData?.tvlUSD)}</TYPE.label>
-                      <TYPE.main></TYPE.main>
-                      <Percent value={protocolData?.tvlUSDChange} wrap={true} />
-                    </RowFixed>
-                  </HideMedium>
+    <PageWrapper>
+      <AutoColumn $gap="16px">
+        <TYPE.main>Uniswap Overview</TYPE.main>
+        <ResponsiveRow>
+          <ChartWrapper>
+            <LineChart
+              data={formattedTvlData}
+              height={220}
+              minHeight={332}
+              color={activeNetwork.primaryColor}
+              value={liquidityHover}
+              label={leftLabel}
+              setValue={setLiquidityHover}
+              setLabel={setLeftLabel}
+              topLeft={
+                <AutoColumn $gap="4px">
+                  <TYPE.mediumHeader fontSize="16px">TVL</TYPE.mediumHeader>
+                  <TYPE.largeHeader fontSize="32px">
+                    <MonoSpace>{tvlValue} </MonoSpace>
+                  </TYPE.largeHeader>
+                  <TYPE.main fontSize="12px" height="14px">
+                    {leftLabel ? <MonoSpace>{leftLabel} (UTC)</MonoSpace> : null}
+                  </TYPE.main>
+                </AutoColumn>
+              }
+            />
+          </ChartWrapper>
+          <ChartWrapper>
+            <BarChart
+              height={220}
+              minHeight={332}
+              data={
+                volumeWindow === VolumeWindow.monthly
+                  ? monthlyVolumeData
+                  : volumeWindow === VolumeWindow.weekly
+                  ? weeklyVolumeData
+                  : formattedVolumeData
+              }
+              color={theme?.blue1}
+              setValue={setVolumeHover}
+              setLabel={setRightLabel}
+              value={volumeHover}
+              label={rightLabel}
+              activeWindow={volumeWindow}
+              topRight={
+                <RowFixed style={{ marginLeft: '-40px', marginTop: '8px' }}>
+                  <SmallOptionButton
+                    $active={volumeWindow === VolumeWindow.daily}
+                    onClick={() => setVolumeWindow(VolumeWindow.daily)}
+                  >
+                    D
+                  </SmallOptionButton>
+                  <SmallOptionButton
+                    $active={volumeWindow === VolumeWindow.weekly}
+                    style={{ marginLeft: '8px' }}
+                    onClick={() => setVolumeWindow(VolumeWindow.weekly)}
+                  >
+                    W
+                  </SmallOptionButton>
+                  <SmallOptionButton
+                    $active={volumeWindow === VolumeWindow.monthly}
+                    style={{ marginLeft: '8px' }}
+                    onClick={() => setVolumeWindow(VolumeWindow.monthly)}
+                  >
+                    M
+                  </SmallOptionButton>
                 </RowFixed>
-              </RowBetween>
-            </DarkGreyCard>
-          </HideSmall>
-          <RowBetween>
-            <TYPE.main>Top Tokens</TYPE.main>
-            <StyledInternalLink to="tokens">Explore</StyledInternalLink>
-          </RowBetween>
-          <TokenTable tokenDatas={formattedTokens} />
-          <RowBetween>
-            <TYPE.main>Top Pools</TYPE.main>
-            <StyledInternalLink to="pools">Explore</StyledInternalLink>
-          </RowBetween>
-          <PoolTable poolDatas={poolDatas} />
-          <RowBetween>
-            <TYPE.main>Transactions</TYPE.main>
-          </RowBetween>
-          {transactions ? <TransactionsTable transactions={transactions} color={activeNetwork.primaryColor} /> : null}
-        </AutoColumn>
-      </PageWrapper>
-    </Trace>
+              }
+              topLeft={
+                <AutoColumn $gap="4px">
+                  <TYPE.mediumHeader fontSize="16px">Volume 24H</TYPE.mediumHeader>
+                  <TYPE.largeHeader fontSize="32px">
+                    <MonoSpace> {formatDollarAmount(volumeHover, 2)}</MonoSpace>
+                  </TYPE.largeHeader>
+                  <TYPE.main fontSize="12px" height="14px">
+                    {rightLabel ? <MonoSpace>{rightLabel} (UTC)</MonoSpace> : null}
+                  </TYPE.main>
+                </AutoColumn>
+              }
+            />
+          </ChartWrapper>
+        </ResponsiveRow>
+        <HideSmall>
+          <DarkGreyCard>
+            <RowBetween>
+              <RowFixed>
+                <RowFixed mr="20px">
+                  <TYPE.main mr="4px">Volume 24H: </TYPE.main>
+                  <TYPE.label mr="4px">{formatDollarAmount(protocolData?.volumeUSD)}</TYPE.label>
+                  <Percent value={protocolData?.volumeUSDChange} wrap={true} />
+                </RowFixed>
+                <RowFixed mr="20px">
+                  <TYPE.main mr="4px">Fees 24H: </TYPE.main>
+                  <TYPE.label mr="4px">{formatDollarAmount(protocolData?.feesUSD)}</TYPE.label>
+                  <Percent value={protocolData?.feeChange} wrap={true} />
+                </RowFixed>
+                <HideMedium>
+                  <RowFixed mr="20px">
+                    <TYPE.main mr="4px">TVL: </TYPE.main>
+                    <TYPE.label mr="4px">{formatDollarAmount(protocolData?.tvlUSD)}</TYPE.label>
+                    <TYPE.main></TYPE.main>
+                    <Percent value={protocolData?.tvlUSDChange} wrap={true} />
+                  </RowFixed>
+                </HideMedium>
+              </RowFixed>
+            </RowBetween>
+          </DarkGreyCard>
+        </HideSmall>
+        <RowBetween>
+          <TYPE.main>Top Tokens</TYPE.main>
+          <StyledInternalLink to="tokens">Explore</StyledInternalLink>
+        </RowBetween>
+        <TokenTable tokenDatas={formattedTokens} />
+        <RowBetween>
+          <TYPE.main>Top Pools</TYPE.main>
+          <StyledInternalLink to="pools">Explore</StyledInternalLink>
+        </RowBetween>
+        <PoolTable poolDatas={poolDatas} />
+        <RowBetween>
+          <TYPE.main>Transactions</TYPE.main>
+        </RowBetween>
+        {transactions ? <TransactionsTable transactions={transactions} color={activeNetwork.primaryColor} /> : null}
+      </AutoColumn>
+    </PageWrapper>
   )
 }

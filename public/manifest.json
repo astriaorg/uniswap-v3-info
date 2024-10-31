@@ -1,6 +1,11 @@
 {
-  "short_name": "Uniswap",
-  "name": "Uniswap",
+  "background_color": "#050A0D",
+  "display": "standalone",
+  "homepage_url": "https://flame.astria.org/",
+  "providedBy": {
+    "name": "Astria",
+    "url": "https://astria.org"
+  },
   "icons": [
     {
       "src": "./images/192x192_App_Icon.png",
@@ -16,7 +21,10 @@
     }
   ],
   "orientation": "portrait",
-  "display": "standalone",
-  "theme_color": "#ff007a",
-  "background_color": "#fff"
+  "name": "Flame DEX",
+  "description": "Swap or provide liquidity on Flame",
+  "iconPath": "./images/256x256_App_Icon.png",
+  "short_name": "Flame DEX",
+  "start_url": ".",
+  "theme_color": "#F19727"
 }
