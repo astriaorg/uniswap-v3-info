@@ -127,7 +127,6 @@ export default function Home() {
   return (
     <PageWrapper>
       <AutoColumn $gap="16px">
-        <TYPE.main>Uniswap Overview</TYPE.main>
         <ResponsiveRow>
           <ChartWrapper>
             <LineChart

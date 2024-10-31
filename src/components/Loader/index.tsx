@@ -1,5 +1,5 @@
 import React from 'react'
-import v3 from '../../assets/images/whitev3.svg'
+import v3 from '../../assets/images/flame-loader.png'
 import styled, { keyframes, css } from 'styled-components'
 
 const rotate = keyframes`

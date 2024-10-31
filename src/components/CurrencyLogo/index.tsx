@@ -4,6 +4,7 @@ import { isAddress } from 'utils'
 import Logo from '../Logo'
 import { useActiveNetworkVersion } from 'state/application/hooks'
 import { ChainId } from '@uniswap/sdk-core'
+import { WETH_ADDRESSES } from '../../constants'
 
 export function chainIdToNetworkName(networkId: ChainId) {
   switch (networkId) {
@@ -15,17 +16,23 @@ export function chainIdToNetworkName(networkId: ChainId) {
 }
 
 const getTokenLogoURL = ({ address, chainId }: { address: string; chainId: ChainId }) => {
-  return `https://raw.githubusercontent.com/uniswap/assets/master/blockchains/${chainIdToNetworkName(
-    chainId,
-  )}/assets/${address}/logo.png`
+  // Check if address is WETH
+  if (WETH_ADDRESSES.includes(address.toLowerCase())) {
+    return 'https://raw.githubusercontent.com/astriaorg/uniswap-v3-interface/refs/heads/astria/src/assets/images/celestia-logo.png'
+  }
+
+  return (
+    `https://raw.githubusercontent.com/astriaorg/uniswap-v3-interface/refs/heads/astria/src/assets/token-logos/` +
+    `${chainIdToNetworkName(chainId)}/${address}.png`
+  )
 }
 
 const StyledLogo = styled(Logo)<{ size: string }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
   border-radius: ${({ size }) => size};
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
-  background-color: ${({ theme }) => theme.white};
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   color: ${({ theme }) => theme.text4};
 `
 
@@ -41,25 +48,15 @@ export default function CurrencyLogo({
 }) {
   const [activeNetwork] = useActiveNetworkVersion()
 
-  // const checkSummed = isAddress(address)
-
-  //temp until token logo issue merged
-  const tempSources: { [address: string]: string } = useMemo(() => {
-    return {
-      ['0x4dd28568d05f09b02220b09c2cb307bfd837cb95']:
-        'https://assets.coingecko.com/coins/images/18143/thumb/wCPb0b88_400x400.png?1630667954',
-    }
-  }, [])
+  const checkSummed = isAddress(address)
 
   const srcs: string[] = useMemo(() => {
     const checkSummed = isAddress(address)
-
     if (checkSummed && address) {
-      const override = tempSources[address]
-      return [getTokenLogoURL({ address: checkSummed, chainId: activeNetwork.chainId }), override]
+      return [getTokenLogoURL({ address: checkSummed, chainId: activeNetwork.chainId })]
     }
     return []
-  }, [address, tempSources, activeNetwork.chainId])
+  }, [checkSummed, address, activeNetwork.chainId])
 
   return <StyledLogo size={size} srcs={srcs} alt={'token logo'} style={style} {...rest} />
 }
