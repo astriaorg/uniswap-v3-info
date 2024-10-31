@@ -15,9 +15,7 @@ export function chainIdToNetworkName(networkId: ChainId) {
 }
 
 const getTokenLogoURL = ({ address, chainId }: { address: string; chainId: ChainId }) => {
-  return `https://raw.githubusercontent.com/uniswap/assets/master/blockchains/${chainIdToNetworkName(
-    chainId,
-  )}/assets/${address}/logo.png`
+  return `https://raw.githubusercontent.com/astriaorg/uniswap-v3-interface/refs/heads/astria/src/assets/token-logos/flame/${address}.png`
 }
 
 const StyledLogo = styled(Logo)<{ size: string }>`
