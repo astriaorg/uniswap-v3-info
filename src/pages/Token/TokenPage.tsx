@@ -162,10 +162,7 @@ export default function TokenPage() {
         !tokenData.exists ? (
           <LightGreyCard style={{ textAlign: 'center' }}>
             No pool has been created with this token yet. Create one
-            <StyledExternalLink
-              style={{ marginLeft: '4px' }}
-              href={`https://flame.astria.org/add/${formattedAddress}`}
-            >
+            <StyledExternalLink style={{ marginLeft: '4px' }} href={`https://flame.astria.org/add/${formattedAddress}`}>
               here.
             </StyledExternalLink>
           </LightGreyCard>

@@ -157,11 +157,11 @@ export default function App() {
             <BodyWrapper $warningActive={showNotSyncedWarning}>
               <Popups />
               <Routes>
-                <Route path="/:networkID?/pools/:address" element={<PoolPage />} />
-                <Route path="/:networkID?/pools" element={<PoolsOverview />} />
-                <Route path="/:networkID?/tokens/:address" element={<RedirectInvalidToken />} />
-                <Route path="/:networkID?/tokens" element={<TokensOverview />} />
-                <Route path="/:networkID?" element={<Home />} />
+                <Route path="/pools/:address" element={<PoolPage />} />
+                <Route path="/pools" element={<PoolsOverview />} />
+                <Route path="/tokens/:address" element={<RedirectInvalidToken />} />
+                <Route path="/tokens" element={<TokensOverview />} />
+                <Route path="/" element={<Home />} />
               </Routes>
               <Marginer />
             </BodyWrapper>

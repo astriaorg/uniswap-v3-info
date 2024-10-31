@@ -201,7 +201,8 @@ body {
 }
 
  a {
-   color: ${colors(false).blue1}; 
+   color: ${colors(false).orange1};
+   cursor: pointer;
  }
 
 * {

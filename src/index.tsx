@@ -2,8 +2,7 @@ import 'inter-ui'
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
-import './i18n'
+import { BrowserRouter } from 'react-router-dom'
 import App from './pages/App'
 import store from './state'
 import UserUpdater from './state/user/updater'
@@ -39,9 +38,9 @@ root.render(
         <Updaters />
         <ThemeProvider>
           <ThemedGlobalStyle />
-          <HashRouter>
+          <BrowserRouter>
             <App />
-          </HashRouter>
+          </BrowserRouter>
         </ThemeProvider>
       </Provider>
     </ApolloProvider>
