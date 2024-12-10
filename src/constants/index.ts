@@ -9,11 +9,11 @@ export const MAX_UINT128 = BigNumber.from(2).pow(128).sub(1)
 export const WETH_ADDRESSES = ['0x61b7794b6a0cc383b367c327b91e5ba85915a071']
 
 export const TOKEN_HIDE: { [key: string]: string[] } = {
-  [SupportedNetwork.FLAME]: [],
+  [SupportedNetwork.FLAME]: ['0x2b1ddc7057604a44450bdec51810693103c2fe61'],
 }
 
 export const POOL_HIDE: { [key: string]: string[] } = {
-  [SupportedNetwork.FLAME]: [],
+  [SupportedNetwork.FLAME]: ['0x1b8e6c4946c2779d78ee921fb217b3243c920372'],
 }
 
 export const START_BLOCKS: { [key: string]: number } = {
