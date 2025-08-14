@@ -14,7 +14,7 @@ const createThrottledLink = (uri: string) => {
 }
 
 export const healthClient = new ApolloClient({
-  uri: 'https://api.thegraph.com/index-node/graphql',
+  uri: 'https://graph-node-index.flame.astria.org/',
   cache: new InMemoryCache(),
 })
 
