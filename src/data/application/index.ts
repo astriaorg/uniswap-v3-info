@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 export const SUBGRAPH_HEALTH = gql`
   query health($name: Bytes) {
-    indexingStatusForCurrentVersion(subgraphName: $name,) {
+    indexingStatusForCurrentVersion(subgraphName: $name) {
       synced
       health
       chains {
